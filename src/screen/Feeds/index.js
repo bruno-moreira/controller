@@ -1,16 +1,7 @@
 import React from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
-import { Card, CardContent, CardImage } from 'react-native-cards';
+import FeedCard from '../../components/FeedCard';
+import { View, FlatList } from 'react-native';
 import feedsEstaticos from '../../assets/dicionarios/feeds.json';
-import avatar from '../../assets/img/avatar.png';
-import produto from '../../assets/img/produto.png';
-import {
-    Avatar,
-    NomeProduto,
-    DescricaoProduto,
-    DataProduto,
-    NomeEmpresa
-} from '../../assets/styles';
 
 const FEEDS_POR_PAGINA = 4;
 
@@ -22,6 +13,7 @@ export default class Feeds extends React.Component {
         this.state = {
             proximaPagina: 0,
             feeds: [],
+            atualizando: false,
             carregando: false
         };
     }
@@ -44,10 +36,12 @@ export default class Feeds extends React.Component {
             this.setState({
                 proximaPagina: proximaPagina + 1,
                 feeds : [...feeds, ...maisFeeds],
+                atualizando: false,
                 carregando: false
             });
         } else{
             this.setState({
+                atualizando: false,
                 carregando: false
             });
         }
@@ -66,30 +60,21 @@ export default class Feeds extends React.Component {
         this.carregarFeeds();
     }
 
+    atualizar = () => {
+        this.setState({ atualizando: true, feeds: [], proximaPagina: 0 }, () => {
+            this.carregarFeeds();
+        });
+    }
+
     mostrarFeed = (feed) => {
         return(
-            <TouchableOpacity>
-                <Card>
-                    <Avatar source={avatar}/>
-                    <CardContent>
-                        <CardImage source={produto}/>
-                        <NomeEmpresa>{feed.company.name}</NomeEmpresa>
-                    </CardContent>
-                    <CardContent>
-                        <NomeProduto>{feed.product.name}</NomeProduto>
-                    </CardContent>
-                    <CardContent>
-                        <DescricaoProduto>{feed.product.description}</DescricaoProduto>
-                    </CardContent>
-                    <CardContent>
-                        <DataProduto>{feed.product.price}</DataProduto>
-                    </CardContent>
-                </Card>
-            </TouchableOpacity>
+            <FeedCard feed={feed} navegador={this.props.navigation}/>
         );
     }
 
     mostrarFeeds = (feeds) =>{
+        const { atualizando } = this.state;
+
         return (
             <FlatList
                 data={feeds}
@@ -97,6 +82,9 @@ export default class Feeds extends React.Component {
 
                 onEndReached = {() => this.carregarMaisFeeds()}
                 onEndReachedThreshold = {0.1}
+
+                onRefresh={() => this.atualizar()}
+                refreshing={atualizando}
 
                 keyExtractor={(item) => String(item._id)}
                 renderItem={({item}) => {
@@ -119,9 +107,7 @@ export default class Feeds extends React.Component {
               this.mostrarFeeds(feeds)
             );    
         }else{
-            return (
-                <View></View>
-            );
+            return (null);
         }        
     }
 }
