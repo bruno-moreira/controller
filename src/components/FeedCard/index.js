@@ -8,6 +8,7 @@ import {
     NomeProduto,
     DescricaoProduto,
     DataProduto,
+    PrecoProduto,
     NomeEmpresa
 } from '../../assets/styles';
 
@@ -42,7 +43,10 @@ export default class FeedCard extends React.Component{
                         <DescricaoProduto>{feed.product.description}</DescricaoProduto>
                     </CardContent>
                     <CardContent>
-                        <DataProduto>{feed.product.price}</DataProduto>
+                        <DataProduto>{feed.product.date}</DataProduto>
+                    </CardContent>
+                    <CardContent>
+                        <PrecoProduto>{"R$ " + feed.product.price}</PrecoProduto>
                     </CardContent>
                 </Card>
             </TouchableOpacity>

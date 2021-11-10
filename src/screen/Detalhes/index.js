@@ -1,7 +1,7 @@
 import React from 'react';
 import { SliderBox } from 'react-native-image-slider-box';
 import CardView from 'react-native-cardview';
-import { NomeProduto, DescricaoProduto, DataProduto } from '../../assets/styles';
+import { NomeProduto, DescricaoProduto, DataProduto, PrecoProduto } from '../../assets/styles';
 
 import feedsEstaticos from '../../assets/dicionarios/feeds.json';
 import slide1 from '../../assets/img/slide1.jpeg'
@@ -66,7 +66,8 @@ export default class Detalhes extends React.Component {
                     { this.mostrarSlides() }
                     <NomeProduto>{feed.product.name}</NomeProduto>
                     <DescricaoProduto>{feed.product.description}</DescricaoProduto>
-                    <DataProduto>{feed.product.price}</DataProduto>
+                    <PrecoProduto>{"R$ "+feed.product.price}</PrecoProduto>
+                    <DataProduto>{feed.product.date}</DataProduto>
                 </CardView>
             );
         }else{

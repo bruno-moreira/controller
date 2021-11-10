@@ -24,8 +24,13 @@ export const DescricaoProduto = styled.Text`
     color: #59594a;
 `;
 
-export const DataProduto = styled.Text`
-    font-size: 14px;
-    font-weigth: bold;
+export const PrecoProduto = styled.Text`
+    font-size: 16px;
     color: #59594a;
+`;
+
+export const DataProduto = styled.Text`
+    font-size: 18px;
+    font-weigth: bold;
+    color: red;
 `;
