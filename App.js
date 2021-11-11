@@ -11,6 +11,9 @@ const Navigator = createStackNavigator(
   {
     Feeds: { screen: Feeds },
     Detalhes: { screen: Detalhes }
+  },
+  {
+    headerMode: 'none'
   }
 );
 

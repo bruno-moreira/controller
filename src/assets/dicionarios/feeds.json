@@ -11,7 +11,7 @@
                 "name": "Calabresa Toscana",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "price": 100.0,
-                "date": "2021-11-01",
+                "date": "01/11/2021",
                 "url": "https://loja.chillibeans.com.br/",
                 "blobs": [
                     {
@@ -40,7 +40,7 @@
                 "name": "Chocolate",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "price": 110.0,
-                "date": "2021-10-01",
+                "date": "01/10/2021",
                 "url": "https://loja.chillibeans.com.br/",
                 "blobs": [
                     {
@@ -66,7 +66,7 @@
                 "name": "Queijo Mussarela",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "price": 800.0,
-                "date": "2021-11-10",
+                "date": "10/11/2021",
                 "url": "https://www.hstern.com.br/",
                 "blobs": [
                     {
@@ -91,7 +91,7 @@
                 "name": "Pizza de Atum",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "price": 2500.0,
-                "date": "2021-11-20",
+                "date": "20/11/2021",
                 "url": "https://www.hstern.com.br/",
                 "blobs": [
                     {
@@ -112,7 +112,7 @@
                 "name": "Spryte",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "price": 260.0,
-                "date": "2021-06-01",
+                "date": "01/06/2021",
                 "url": "https://www.boticario.com.br/",
                 "blobs": [
                     {
@@ -144,7 +144,7 @@
                 "name": "Sorvete",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "price": 450.0,
-                "date": "2021-11-07",
+                "date": "07/11/2021",
                 "url": "https://www.arezzo.com.br/",
                 "blobs": [
                     {
@@ -173,7 +173,7 @@
                 "name": "Presunto",
                 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 "price": 420.0,
-                "date": "2021-12-01",
+                "date": "01/12/2021",
                 "url": "https://www.dafiti.com.br/",
                 "blobs": [
                     {

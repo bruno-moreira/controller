@@ -1,8 +1,8 @@
 import React from "react";
 import { TouchableOpacity } from 'react-native';
 import { Card, CardContent, CardImage } from 'react-native-cards';
-import avatar from '../../assets/img/avatar.jpeg';
-import produto from '../../assets/img/produto.png';
+import avatar from '../../assets/img/avatar.png';
+import produto from '../../assets/img/produto.jpeg';
 import {
     Avatar,
     NomeProduto,
