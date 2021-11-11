@@ -3,6 +3,10 @@ import FeedCard from '../../components/FeedCard';
 import { View, FlatList } from 'react-native';
 import { Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
+import DrawerLayout from 'react-native-drawer-layout';
+
+import Menu from '../../components/Menu';
+
 import feedsEstaticos from '../../assets/dicionarios/feeds.json';
 import { EntradaNomeProduto, CentralizadoNaMesmaLinha } from '../../assets/styles';
 
@@ -13,10 +17,13 @@ export default class Feeds extends React.Component {
     constructor(props) {
         super(props);
 
+        this.filtrarPorEmpresa = this.filtrarPorEmpresa.bind(this);
+
         this.state = {
             proximaPagina: 0,
             feeds: [],
 
+            empresaEscolhida: null,
             nomeProduto: null,
             atualizando: false,
             carregando: false
@@ -24,14 +31,25 @@ export default class Feeds extends React.Component {
     }
 
     carregarFeeds = () => {
-        const { proximaPagina, feeds, nomeProduto } = this.state;
+        const { proximaPagina, feeds, nomeProduto, empresaEscolhida } = this.state;
 
         // avisa que esta carregando
         this.setState({
             carregando: true
         });
-        // precisa filtrar por nome de produto 
-        if (nomeProduto) {
+
+        // filtragem pela empresa
+        if (empresaEscolhida) {
+            const maisFeeds = feedsEstaticos.feeds.filter((feed) =>
+                feed.company._id == empresaEscolhida._id);
+
+            this.setState({
+                feeds: maisFeeds,
+                atualizando: false,
+                carregando: false
+            });
+        } else if (nomeProduto) {
+            // precisa filtrar por nome de produto         
             const maisFeeds = feedsEstaticos.feeds.filter((feed) =>
                 feed.product.name.toLowerCase().includes(nomeProduto.toLowerCase()));
 
@@ -111,14 +129,37 @@ export default class Feeds extends React.Component {
         );
     }
 
+    mostrarMenu = () => {
+        this.menu.openDrawer();
+    }
+
+    filtrarPorEmpresa = (empresa) => {
+        this.setState({
+            empresaEscolhida: empresa
+        }, () => {
+            this.carregarFeeds();
+        })
+
+        this.menu.closeDrawer();
+    }
+
     mostrarFeeds = (feeds) => {
         const { atualizando } = this.state;
 
         return (
-            <>
+            <DrawerLayout
+                drawerWidth={250}
+                drawerPosition={DrawerLayout.positions.Left}
+                ref={drawerElement => {
+                    this.menu = drawerElement
+                }}
+                renderNavigationView={() => <Menu filtragem={this.filtrarPorEmpresa} />}
+            >
                 <Header
                     leftComponent={
-                        <Icon size={26} name="menuunfold" />
+                        <Icon size={26} name="menuunfold" onPress={() => {
+                            this.mostrarMenu()
+                        }} />
                     }
                     centerComponent={
                         this.mostrarBarraPesquisa()
@@ -147,7 +188,7 @@ export default class Feeds extends React.Component {
                     }}
                 >
                 </FlatList>
-            </>
+            </DrawerLayout>
         );
     }
 

@@ -1,0 +1,34 @@
+{
+    "empresas": [
+        {
+            "_id": 1, 
+            "name": "Seara",
+            "avatar": "chillibean.jpeg"
+        },
+        {
+            "_id": 2, 
+            "name": "Nestlé",
+            "avatar": "rayban.jpeg"
+        },
+        {
+            "_id": 3, 
+            "name": "Avinor",
+            "avatar": "hstern.jpeg"
+    },
+        {
+            "_id": 4, 
+            "name": "Sadia",
+            "avatar": "boticario.jpeg"
+        },
+        {
+            "_id": 5, 
+            "name": "Coca Cola",
+            "avatar": "arezzo.jpeg"
+    },
+        {
+            "_id": 6, 
+            "name": "Elefante",
+            "avatar": "dafiti.jpeg"
+        }        
+    ]
+}

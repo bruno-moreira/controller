@@ -9,11 +9,12 @@ import {
     DescricaoProduto,
     DataProduto,
     PrecoProduto,
-    NomeEmpresa
+    NomeEmpresa,
+    EsquerdaDaMesmaLinha
 } from '../../assets/styles';
 
-export default class FeedCard extends React.Component{
-    constructor(props){
+export default class FeedCard extends React.Component {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -24,17 +25,19 @@ export default class FeedCard extends React.Component{
 
     render = () => {
         const { feed, navegador } = this.state;
-        return(
+        return (
             <TouchableOpacity onPress={
                 () => {
-                    navegador.navigate("Detalhes", {feedId: feed._id})
+                    navegador.navigate("Detalhes", { feedId: feed._id })
                 }
             }>
                 <Card>
-                    <CardImage source={produto}/>
+                    <CardImage source={produto} />
                     <CardContent>
-                        <Avatar source={avatar}/>
-                        <NomeEmpresa>{feed.company.name}</NomeEmpresa>
+                        <EsquerdaDaMesmaLinha>
+                            <Avatar source={avatar} />
+                            <NomeEmpresa>{feed.company.name}</NomeEmpresa>
+                        </EsquerdaDaMesmaLinha>
                     </CardContent>
                     <CardContent>
                         <NomeProduto>{feed.product.name}</NomeProduto>
