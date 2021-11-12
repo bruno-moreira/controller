@@ -1,9 +1,14 @@
 import React from 'react';
+import { View } from 'react-native';
+import { Header } from 'react-native-elements';
 import { SliderBox } from 'react-native-image-slider-box';
 import CardView from 'react-native-cardview';
-import { NomeProduto, DescricaoProduto, DataProduto, PrecoProduto } from '../../assets/styles';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { Avatar, NomeProduto, DescricaoProduto, DataProduto, PrecoProduto, NomeEmpresa, CentralizadoNaMesmaLinha, Espacador } from '../../assets/styles';
 
 import feedsEstaticos from '../../assets/dicionarios/feeds.json';
+import Compartilhador from '../../components/Compartilhador';
+import avatar from '../../assets/img/avatar.png';
 import slide1 from '../../assets/img/slide1.jpeg'
 import slide2 from '../../assets/img/slide2.jpg'
 import slide3 from '../../assets/img/slide3.png'
@@ -36,9 +41,9 @@ export default class Detalhes extends React.Component {
     }
 
     mostrarSlides = () => {
-        const slides = [ slide1, slide2, slide3 ];
+        const slides = [slide1, slide2, slide3];
 
-        return(
+        return (
             <SliderBox
                 dotColor={"#ffad05"}
                 inactiveDotColor={"#5995ed"}
@@ -59,19 +64,48 @@ export default class Detalhes extends React.Component {
         const { feed } = this.state;
         if (feed) {
             return (
-                <CardView
-                    cardElevation={2}
-                    cornerRadius={0}
-                >
-                    { this.mostrarSlides() }
-                    <NomeProduto>{feed.product.name}</NomeProduto>
-                    <DescricaoProduto>{feed.product.description}</DescricaoProduto>
-                    <PrecoProduto>{"R$ "+feed.product.price}</PrecoProduto>
-                    <DataProduto>{feed.product.date}</DataProduto>
-                </CardView>
+                <>
+                    <Header
+                        leftComponent={
+                            <Icon size={28} name="left" onPress={() => {
+                                this.props.navigation.goBack();
+                            }} />
+                        }
+                        centerComponent={
+                            <CentralizadoNaMesmaLinha>
+                                <Avatar source={avatar} />
+                                <NomeEmpresa>{feed.company.name}</NomeEmpresa>
+                            </CentralizadoNaMesmaLinha>
+                        }
+                        rightComponent={
+                            <>
+                                <Compartilhador feed={feed} />
+                            </>
+                        }
+                    >
+                    </Header>
+                    <CardView
+                        cardElevation={2}
+                        cornerRadius={0}
+                    >
+                        {this.mostrarSlides()}
+                        <View style={{padding: 8}}>
+                            <Espacador />
+                            <NomeProduto>{feed.product.name}</NomeProduto>
+                            <Espacador />
+                            <DescricaoProduto>{feed.product.description}</DescricaoProduto>
+                            <Espacador />
+                            <CentralizadoNaMesmaLinha>
+                                <PrecoProduto>{"R$ " + feed.product.price}  </PrecoProduto>
+                                <DataProduto>{feed.product.date}</DataProduto>
+                            </CentralizadoNaMesmaLinha>
+                            <Espacador />
+                        </View>
+                    </CardView>
+                </>
             );
-        }else{
-            return(null);
+        } else {
+            return (null);
         }
     }
 }

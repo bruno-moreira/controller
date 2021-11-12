@@ -87,7 +87,7 @@
             "_id": 4,
             "datetime": "2019-08-01T12:00-0500",
             "company": {
-                "_id": 4,
+                "_id": 3,
                 "name": "Sadia",
                 "avatar": "hstern.jpeg"
             },
@@ -109,7 +109,7 @@
             "_id": 5,
             "datetime": "2019-07-01T12:00-0500",
             "company": {
-                "_id": 5,
+                "_id": 4,
                 "name": "Coca Cola",
                 "avatar": "boticario.jpeg"
             },
@@ -172,7 +172,7 @@
             "_id": 7,
             "datetime": "2019-05-01T12:00-0500",
             "company": {
-                "_id": 7,
+                "_id": 5,
                 "name": "Aurora",
                 "avatar": "dafiti.jpeg"
             },

@@ -95,7 +95,7 @@ export default class Feeds extends React.Component {
     }
 
     atualizar = () => {
-        this.setState({ atualizando: true, feeds: [], proximaPagina: 0, nomeProduto: null }, () => {
+        this.setState({ atualizando: true, feeds: [], proximaPagina: 0, nomeProduto: null, empresaEscolhida: null }, () => {
             this.carregarFeeds();
         });
     }

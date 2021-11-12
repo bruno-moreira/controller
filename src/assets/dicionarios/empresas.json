@@ -12,22 +12,17 @@
         },
         {
             "_id": 3, 
-            "name": "Avinor",
-            "avatar": "hstern.jpeg"
-    },
-        {
-            "_id": 4, 
             "name": "Sadia",
             "avatar": "boticario.jpeg"
         },
         {
-            "_id": 5, 
+            "_id": 4, 
             "name": "Coca Cola",
             "avatar": "arezzo.jpeg"
     },
         {
-            "_id": 6, 
-            "name": "Elefante",
+            "_id": 5, 
+            "name": "Aurora",
             "avatar": "dafiti.jpeg"
         }        
     ]
