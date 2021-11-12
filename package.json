@@ -37,5 +37,17 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bruno-moreira/controller.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bruno-moreira/controller/issues"
+  },
+  "homepage": "https://github.com/bruno-moreira/controller#readme",
+  "description": ""
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import empresasEstaticas from '../../assets/dicionarios/empresas.json';
 
 import { 
@@ -26,24 +27,28 @@ export default class Menu extends React.Component {
             <TouchableOpacity onPress={() => {
                 filtrar(empresa)
             }}>
+                <DivisorMenu/>
                 <EsquerdaDaMesmaLinha>
                     <Avatar source={avatar} />
                     <NomeEmpresa>{empresa.name}</NomeEmpresa>
-                </EsquerdaDaMesmaLinha>
-                <DivisorMenu/>
+                </EsquerdaDaMesmaLinha>                
             </TouchableOpacity>
         );
     }
 
     render = () => {
         const empresas = empresasEstaticas.empresas;
-        return (
-            <ScrollView>
-                <Espacador/>
-                <ContainerMenu>
-                    {empresas.map((empresa) => this.mostrarEmpresa(empresa))}
-                </ContainerMenu>
-            </ScrollView>
+
+        return(
+            <SafeAreaInsetsContext.Consumer>
+                {insets => 
+                    <ScrollView style={{ paddingTop: insets.top }}>
+                        <ContainerMenu>
+                            {empresas.map((empresa) => this.mostrarEmpresa(empresa))}
+                        </ContainerMenu>
+                    </ScrollView>
+                }
+            </SafeAreaInsetsContext.Consumer>
         );
     }
 }
