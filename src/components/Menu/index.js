@@ -1,12 +1,12 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import { LoginOptionsMenu } from '../../components/Login';
 import empresasEstaticas from '../../assets/dicionarios/empresas.json';
 
 import { 
     Avatar, 
     NomeEmpresa,
-    Espacador, 
     ContainerMenu, 
     EsquerdaDaMesmaLinha, 
     DivisorMenu 
@@ -43,6 +43,7 @@ export default class Menu extends React.Component {
             <SafeAreaInsetsContext.Consumer>
                 {insets => 
                     <ScrollView style={{ paddingTop: insets.top }}>
+                        <LoginOptionsMenu />
                         <ContainerMenu>
                             {empresas.map((empresa) => this.mostrarEmpresa(empresa))}
                         </ContainerMenu>
