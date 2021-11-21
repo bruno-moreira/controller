@@ -16,7 +16,7 @@
     "moment-timezone": "^0.5.34",
     "react": "17.0.2",
     "react-moment": "^1.1.1",
-    "react-native": "0.66.2",
+    "react-native": "^0.66.3",
     "react-native-cards": "^1.1.4",
     "react-native-cardview": "^2.0.5",
     "react-native-drawer-layout": "^2.0.0",

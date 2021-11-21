@@ -112,19 +112,25 @@ export default class Feeds extends React.Component {
         })
     }
 
-    mostrarBarraPesquisa = () => {
-        const { nomeProduto } = this.state;
+    mostrarBarraPesquisa = () => {        
+        const { nomeProduto} = this.state;
         return (
+            
             <CentralizadoNaMesmaLinha>
                 <EntradaNomeProduto
                     onChangeText={(nome) => { this.atualizarNomeProduto(nome) }}
                     value={nomeProduto}>
                 </EntradaNomeProduto>
-                <Icon style={{ padding: 8 }} size={20} name="search1" onPress={
+                <Icon style={{ padding: 8 }} size={28} name="search1" onPress={
                     () => {
                         this.carregarFeeds()
                     }
                 }></Icon>
+                <Icon size={28} name="calendar" onPress={
+                    () => {
+                        this.props.navigation.navigate("Validade")
+                    }
+                } />
             </CentralizadoNaMesmaLinha>
         );
     }
@@ -149,25 +155,27 @@ export default class Feeds extends React.Component {
         return (
             <DrawerLayout
                 drawerWidth={250}
-                drawerPosition={DrawerLayout.positions.Left}
+                drawerPosition={DrawerLayout.positions.Right}
                 ref={drawerElement => {
                     this.menu = drawerElement
                 }}
                 renderNavigationView={() => <Menu filtragem={this.filtrarPorEmpresa} />}
             >
-                <Header
-                    leftComponent={
-                        <Icon size={26} name="menuunfold" onPress={() => {
-                            this.mostrarMenu()
-                        }} />
-                    }
-                    centerComponent={
-                        this.mostrarBarraPesquisa()
-                    }
-                    rightComponent={
-                        <></>
-                    }
-                ></Header>
+                <CentralizadoNaMesmaLinha>
+                    <Header
+                        leftComponent={
+                            <></>
+                        }
+                        centerComponent={
+                            this.mostrarBarraPesquisa()
+                        }
+                        rightComponent={
+                            <Icon style={{ padding: 8 }} size={28} name="menu-unfold" onPress={() => {
+                                this.mostrarMenu()
+                            }} />
+                        }
+                    ></Header>
+                </CentralizadoNaMesmaLinha>
                 <FlatList
                     data={feeds}
                     numColumns={2}

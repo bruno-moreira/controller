@@ -6,11 +6,13 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Feeds from './src/screen/Feeds';
 import Detalhes from './src/screen/Detalhes';
+import Validade from './src/screen/Validade';
 
 const Navigator = createStackNavigator(
   {
     Feeds: { screen: Feeds },
-    Detalhes: { screen: Detalhes }
+    Detalhes: { screen: Detalhes },
+    Validade: { screen: Validade }
   },
   {
     headerMode: 'none'

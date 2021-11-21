@@ -8,7 +8,6 @@ import SyncStorage from "sync-storage";
 
 export const SIGNERS = {
     Google: "Google",
-    Facebook: "Facebook",
     None: "None"
 };
 

@@ -3,13 +3,16 @@ import { ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { LoginOptionsMenu } from '../../components/Login';
 import empresasEstaticas from '../../assets/dicionarios/empresas.json';
+import Icon from 'react-native-vector-icons/AntDesign';
+import feedsEstaticos from '../../assets/dicionarios/feeds.json';
 
-import { 
-    Avatar, 
+import {
+    Avatar,
     NomeEmpresa,
-    ContainerMenu, 
-    EsquerdaDaMesmaLinha, 
-    DivisorMenu 
+    ContainerMenu,
+    EsquerdaDaMesmaLinha,
+    DivisorMenu,
+    DataProduto
 } from '../../assets/styles';
 import avatar from '../../assets/img/avatar.png';
 export default class Menu extends React.Component {
@@ -17,31 +20,46 @@ export default class Menu extends React.Component {
         super(props)
 
         this.state = {
-           filtrar:  props.filtragem
+            filtrar: props.filtragem,
+            navegador: this.props.navegador
         }
     }
 
     mostrarEmpresa = (empresa) => {
-        const { filtrar} = this.state
+        const { filtrar } = this.state
         return (
             <TouchableOpacity onPress={() => {
                 filtrar(empresa)
             }}>
-                <DivisorMenu/>
+                <DivisorMenu />
                 <EsquerdaDaMesmaLinha>
                     <Avatar source={avatar} />
                     <NomeEmpresa>{empresa.name}</NomeEmpresa>
-                </EsquerdaDaMesmaLinha>                
+                </EsquerdaDaMesmaLinha>
             </TouchableOpacity>
+        );
+    }
+
+    mostrarValidade = () => {
+        return (
+            <Button
+                icon={
+                    <Icon
+                        name={"google"}
+                        size={22}
+                        color={"#fff"}
+                    />}
+                title={" Login"}
+                type={"solid"}/>
         );
     }
 
     render = () => {
         const empresas = empresasEstaticas.empresas;
-
-        return(
+        const { navegador } = this.state;
+        return (
             <SafeAreaInsetsContext.Consumer>
-                {insets => 
+                {insets =>
                     <ScrollView style={{ paddingTop: insets.top }}>
                         <LoginOptionsMenu />
                         <ContainerMenu>
