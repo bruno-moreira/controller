@@ -7,7 +7,6 @@ import Icon from "react-native-vector-icons/AntDesign";
 import SyncStorage from "sync-storage";
 
 export const SIGNERS = {
-    Google: "Google",
     None: "None"
 };
 
