@@ -1,0 +1,41 @@
+version: '3'
+services:
+  feeds:
+    image: controllernet
+    build: ./dockerfiles/servicos/
+    hostname: feeds
+    expose:
+      - '5000'
+    volumes:
+      - './feeds:/servico'
+    command: python3 servico.py
+    networks:
+      controllernet:
+        ipv4_address: 172.29.1.1
+  bancodados:
+    image: mysql
+    hostname: bancodados
+    expose:
+      - '3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    networks:
+      controllernet:
+        ipv4_address: 172.29.1.5
+  arquivos:
+    image: arquivos
+    build: ./dockerfiles/nginx/
+    volumes:
+      - './assets/imagens:/usr/share/nginx/html'
+    hostname: arquivos
+    expose:
+      - '80'
+    networks:
+      controllernet:
+        ipv4_address: 172.29.1.10
+networks:
+  controllernet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.1.0/16
