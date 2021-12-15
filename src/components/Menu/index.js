@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { LoginOptionsMenu } from '../../components/Login';
+import { getEmpresa, getImagem  } from '../../api';
 import empresasEstaticas from '../../assets/dicionarios/empresas.json';
 import Icon from 'react-native-vector-icons/AntDesign';
 import feedsEstaticos from '../../assets/dicionarios/feeds.json';
@@ -14,15 +15,25 @@ import {
     DivisorMenu,
     DataProduto
 } from '../../assets/styles';
-import avatar from '../../assets/img/avatar.png';
 export default class Menu extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
             filtrar: props.filtragem,
-            navegador: this.props.navegador
+            navegador: this.props.navegador,
+            empresas: []
         }
+    }
+
+    componentDidMount = () => {
+        getEmpresa().then((maisEmpresas) => {
+            this.setState({
+                empresas: maisEmpresas
+            });
+        }).catch((erro) => {
+            console.error("Ocorreu um erro menu empresas: " + erro);
+        })
     }
 
     mostrarEmpresa = (empresa) => {
@@ -33,7 +44,7 @@ export default class Menu extends React.Component {
             }}>
                 <DivisorMenu />
                 <EsquerdaDaMesmaLinha>
-                    <Avatar source={avatar} />
+                    <Avatar source={getImagem(empresa.avatar)} />
                     <NomeEmpresa>{empresa.name}</NomeEmpresa>
                 </EsquerdaDaMesmaLinha>
             </TouchableOpacity>
@@ -55,7 +66,7 @@ export default class Menu extends React.Component {
     }
 
     render = () => {
-        const empresas = empresasEstaticas.empresas;
+        const { empresas } = this.state;
         const { navegador } = this.state;
         return (
             <SafeAreaInsetsContext.Consumer>

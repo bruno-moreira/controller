@@ -1,8 +1,6 @@
 import React from "react";
 import { TouchableOpacity } from 'react-native';
 import { Card, CardContent, CardImage } from 'react-native-cards';
-import avatar from '../../assets/img/avatar.png';
-import produto from '../../assets/img/produto.jpeg';
 import {
     Avatar,
     NomeProduto,
@@ -12,7 +10,7 @@ import {
     NomeEmpresa,
     EsquerdaDaMesmaLinha
 } from '../../assets/styles';
-
+import { getImagem } from "../../api";
 export default class FeedCard extends React.Component {
     constructor(props) {
         super(props);
@@ -32,10 +30,10 @@ export default class FeedCard extends React.Component {
                 }
             }>
                 <Card>
-                    <CardImage source={produto} />
+                    <CardImage source={getImagem(feed.product.blobs[0].file)} />
                     <CardContent>
                         <EsquerdaDaMesmaLinha>
-                            <Avatar source={avatar} />
+                            <Avatar source={getImagem(feed.company.avatar)} />
                             <NomeEmpresa>{feed.company.name}</NomeEmpresa>
                         </EsquerdaDaMesmaLinha>
                     </CardContent>

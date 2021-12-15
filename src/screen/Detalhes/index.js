@@ -6,14 +6,10 @@ import CardView from 'react-native-cardview';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Avatar, NomeProduto, DescricaoProduto, DataProduto, PrecoProduto, NomeEmpresa, CentralizadoNaMesmaLinha, Espacador } from '../../assets/styles';
 
-import feedsEstaticos from '../../assets/dicionarios/feeds.json';
+import { getFeed, getImagem } from '../../api';
 import Compartilhador from '../../components/Compartilhador';
-import avatar from '../../assets/img/avatar.png';
-import slide1 from '../../assets/img/slide1.jpeg'
-import slide2 from '../../assets/img/slide2.jpg'
-import slide3 from '../../assets/img/slide3.png'
 
-
+const TOTAL_IMAGENS_SLIDE = 3;
 export default class Detalhes extends React.Component {
     constructor(props) {
         super(props);
@@ -26,14 +22,14 @@ export default class Detalhes extends React.Component {
 
     carregarFeed = () => {
         const { feedId } = this.state;
-        const feeds = feedsEstaticos.feeds;
-        const feedsFiltrados = feeds.filter((feed) => feed._id === feedId);
 
-        if (feedsFiltrados.length) {
+        getFeed(feedId).then((feedAtualizado) => {
             this.setState({
-                feed: feedsFiltrados[0]
+                feed: feedAtualizado
             })
-        }
+        }).catch((erro) => {
+            console.error("error atualizando o detalhe do produto: " + erro);
+        });
     }
 
     componentDidMount = () => {
@@ -41,8 +37,13 @@ export default class Detalhes extends React.Component {
     }
 
     mostrarSlides = () => {
-        const slides = [slide1, slide2, slide3];
-
+        const { feed } = this.state;
+        let slides = [];
+        for (let i = 0; i < TOTAL_IMAGENS_SLIDE; i++) {
+            if (feed.product.blobs[i].file) {
+                slides = [...slides, getImagem(feed.product.blobs[i].file)]
+            }
+        }
         return (
             <SliderBox
                 dotColor={"#ffad05"}
@@ -73,7 +74,7 @@ export default class Detalhes extends React.Component {
                         }
                         centerComponent={
                             <CentralizadoNaMesmaLinha>
-                                <Avatar source={avatar} />
+                                <Avatar source={getImagem(feed.company.avatar)} />
                                 <NomeEmpresa>{feed.company.name}</NomeEmpresa>
                             </CentralizadoNaMesmaLinha>
                         }
@@ -89,7 +90,7 @@ export default class Detalhes extends React.Component {
                         cornerRadius={0}
                     >
                         {this.mostrarSlides()}
-                        <View style={{padding: 8}}>
+                        <View style={{ padding: 8 }}>
                             <Espacador />
                             <NomeProduto>{feed.product.name}</NomeProduto>
                             <Espacador />

@@ -6,11 +6,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import DrawerLayout from 'react-native-drawer-layout';
 
 import Menu from '../../components/Menu';
-
-import feedsEstaticos from '../../assets/dicionarios/feeds.json';
+import { getFeeds, getFeedsPorProduto, getFeedsPorEmpresa } from '../../api';
 import { EntradaNomeProduto, CentralizadoNaMesmaLinha } from '../../assets/styles';
-
-const FEEDS_POR_PAGINA = 4;
 
 export default class Feeds extends React.Component {
 
@@ -20,7 +17,7 @@ export default class Feeds extends React.Component {
         this.filtrarPorEmpresa = this.filtrarPorEmpresa.bind(this);
 
         this.state = {
-            proximaPagina: 0,
+            proximaPagina: 1,
             feeds: [],
 
             empresaEscolhida: null,
@@ -30,8 +27,26 @@ export default class Feeds extends React.Component {
         };
     }
 
+    mostrarMaisFeeds = (maisFeeds) => {
+        const { proximaPagina, feeds } = this.state;
+        if (maisFeeds.length) {
+            //icrementar pagina e guarda os feeds
+            this.setState({
+                proximaPagina: proximaPagina + 1,
+                feeds: [...feeds, ...maisFeeds],
+                atualizando: false,
+                carregando: false
+            });
+        } else {
+            this.setState({
+                atualizando: false,
+                carregando: false
+            });
+        }
+    }
+
     carregarFeeds = () => {
-        const { proximaPagina, feeds, nomeProduto, empresaEscolhida } = this.state;
+        const { proximaPagina, nomeProduto, empresaEscolhida } = this.state;
 
         // avisa que esta carregando
         this.setState({
@@ -40,44 +55,23 @@ export default class Feeds extends React.Component {
 
         // filtragem pela empresa
         if (empresaEscolhida) {
-            const maisFeeds = feedsEstaticos.feeds.filter((feed) =>
-                feed.company._id == empresaEscolhida._id);
-
-            this.setState({
-                feeds: maisFeeds,
-                atualizando: false,
-                carregando: false
-            });
+            getFeedsPorEmpresa(empresaEscolhida._id, proximaPagina).then((maisFeeds) => {
+                this.mostrarMaisFeeds(maisFeeds);
+            }).catch((erro) => {
+                console.error("erro acessando feeds por empresa: " + erro)
+            })
         } else if (nomeProduto) {
-            // precisa filtrar por nome de produto         
-            const maisFeeds = feedsEstaticos.feeds.filter((feed) =>
-                feed.product.name.toLowerCase().includes(nomeProduto.toLowerCase()));
-
-            this.setState({
-                feeds: maisFeeds,
-                atualizando: false,
-                carregando: false
+            getFeedsPorProduto(nomeProduto, proximaPagina).then((maisFeeds) => {
+                this.mostrarMaisFeeds(maisFeeds);
+            }).catch((erro) => {
+                console.error("Error acessando feeds por produto: " + erro);
             });
         } else {
-            // carregar o total de feeds por pagina da pagina atual
-            const idInicial = proximaPagina * FEEDS_POR_PAGINA + 1;
-            const idFinal = idInicial + FEEDS_POR_PAGINA - 1;
-            const maisFeeds = feedsEstaticos.feeds.filter((feed) => feed._id >= idInicial && feed._id <= idFinal);
-
-            if (maisFeeds.length) {
-                //icrementar pagina e guarda os feeds
-                this.setState({
-                    proximaPagina: proximaPagina + 1,
-                    feeds: [...feeds, ...maisFeeds],
-                    atualizando: false,
-                    carregando: false
-                });
-            } else {
-                this.setState({
-                    atualizando: false,
-                    carregando: false
-                });
-            }
+            getFeeds(proximaPagina).then((maisFeeds) => {
+                this.mostrarMaisFeeds(maisFeeds);
+            }).catch((erro) => {
+                console.error("Error acessando feeds geral: " + erro);
+            })
         }
     }
 
@@ -95,7 +89,7 @@ export default class Feeds extends React.Component {
     }
 
     atualizar = () => {
-        this.setState({ atualizando: true, feeds: [], proximaPagina: 0, nomeProduto: null, empresaEscolhida: null }, () => {
+        this.setState({ atualizando: true, feeds: [], proximaPagina: 1, nomeProduto: null, empresaEscolhida: null }, () => {
             this.carregarFeeds();
         });
     }
@@ -112,10 +106,9 @@ export default class Feeds extends React.Component {
         })
     }
 
-    mostrarBarraPesquisa = () => {        
-        const { nomeProduto} = this.state;
+    mostrarBarraPesquisa = () => {
+        const { nomeProduto } = this.state;
         return (
-            
             <CentralizadoNaMesmaLinha>
                 <EntradaNomeProduto
                     onChangeText={(nome) => { this.atualizarNomeProduto(nome) }}
@@ -123,7 +116,12 @@ export default class Feeds extends React.Component {
                 </EntradaNomeProduto>
                 <Icon style={{ padding: 8 }} size={28} name="search1" onPress={
                     () => {
-                        this.carregarFeeds()
+                        this.setState({
+                            proximaPagina: 1,
+                            feeds: []
+                        }, () => {
+                            this.carregarFeeds();
+                        })
                     }
                 }></Icon>
                 <Icon size={28} name="calendar" onPress={
@@ -141,7 +139,9 @@ export default class Feeds extends React.Component {
 
     filtrarPorEmpresa = (empresa) => {
         this.setState({
-            empresaEscolhida: empresa
+            empresaEscolhida: empresa,
+            proximaPagina: 1,
+            feeds: []
         }, () => {
             this.carregarFeeds();
         })

@@ -12,6 +12,19 @@ services:
     networks:
       controllernet:
         ipv4_address: 172.29.1.1
+
+  empresas:
+    image: controllernet
+    build: ./dockerfiles/servicos/
+    hostname: empresas
+    expose:
+      - '5000'
+    volumes:
+      - './empresas:/servico'
+    command: python3 servico.py
+    networks:
+      controllernet:
+        ipv4_address: 172.29.1.2
   bancodados:
     image: mysql
     hostname: bancodados
