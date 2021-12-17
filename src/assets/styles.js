@@ -2,15 +2,21 @@ import styled from 'styled-components/native';
 
 export const Avatar = styled.Image`
     padding: 4px;
-    width: 120px;
+    width: 40px;
     height: 40px;
-    border-radius: 18px;
+    border-radius: 30px;
 `;
 
 export const NomeEmpresa = styled.Text`
     padding: 8px;
     font-size: 16px;
     color: #59594a;
+`;
+
+export const NomeEmpresaMenu = styled.Text`
+    padding: 8px;
+    font-size: 16px;
+    color: #FFFFFF;
 `;
 
 export const NomeProduto = styled.Text`

@@ -1,14 +1,15 @@
 import React from "react";
 import { TouchableOpacity } from 'react-native';
-import { Card, CardContent } from 'react-native-cards';
+import { Card, CardContent, CardImage } from 'react-native-cards';
 import {
+    Avatar,
     NomeProduto,
-    DescricaoProduto,
     DataProduto,
-    NomeEmpresa,
+    PrecoProduto,
+    EsquerdaDaMesmaLinha,
     CentralizadoNaMesmaLinha
 } from '../../assets/styles';
-
+import { getImagem } from "../../api";
 export default class FeedCard extends React.Component {
     constructor(props) {
         super(props);
@@ -28,15 +29,20 @@ export default class FeedCard extends React.Component {
                 }
             }>
                 <Card>
+                    <CardImage source={getImagem(feed.product.blobs[0].file)} />
                     <CardContent>
-                        <CentralizadoNaMesmaLinha>
-                            <DataProduto>{feed.product.date}</DataProduto>
-                        </CentralizadoNaMesmaLinha>                    
-                        <CentralizadoNaMesmaLinha>
-                            <NomeProduto>{feed.product.name}</NomeProduto>
-                            <NomeEmpresa>{"("+feed.company.name+")"}</NomeEmpresa>
-                        </CentralizadoNaMesmaLinha>                    
-                        <DescricaoProduto>{feed.product.description}</DescricaoProduto>
+                        <EsquerdaDaMesmaLinha>
+                            <CentralizadoNaMesmaLinha>
+                                <Avatar source={getImagem(feed.company.avatar)} />
+                                <NomeProduto>{feed.product.name}</NomeProduto>
+                                <PrecoProduto>{"  R$ " + feed.product.price}</PrecoProduto>
+                            </CentralizadoNaMesmaLinha>
+                        </EsquerdaDaMesmaLinha>
+                    </CardContent>
+                    <CardContent>
+                       <CentralizadoNaMesmaLinha>
+                       <DataProduto>{feed.product.date}</DataProduto>
+                       </CentralizadoNaMesmaLinha>
                     </CardContent>
                 </Card>
             </TouchableOpacity>

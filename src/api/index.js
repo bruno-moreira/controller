@@ -1,5 +1,6 @@
 const FEEDS_URL = "http://172.29.1.1:5000/"
 const EMPRESAS_URL = "http://172.29.1.2:5000/"
+const VALIDADE_URL = "http://172.29.1.3:5000/"
 const ARQUIVOS_URL = "http://172.29.1.10:80/"
 
 export const acessarUrl = async(url) => {
@@ -19,12 +20,17 @@ export const acessarUrl = async(url) => {
     return promise;
 }
 
+
+export const getFeed = async(feedId) => {
+    return acessarUrl(VALIDADE_URL + "feed/" + feedId);
+}
+
 export const getFeeds = async(pagina) => {
     return acessarUrl(FEEDS_URL + "feeds/" + pagina);
 }
 
-export const getFeed = async(feedId) => {
-    return acessarUrl(FEEDS_URL + "feed/" + feedId);
+export const getFeedsValidade = async(pagina) => {
+    return acessarUrl(VALIDADE_URL + "feeds_validade/" + pagina);
 }
 
 export const getFeedsPorProduto = async(nomeProduto, pagina) => {

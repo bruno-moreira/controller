@@ -1,12 +1,10 @@
 import React from 'react';
-import ProdutoCard from '../../components/ProdutoCard';
+import FeedCard from '../../components/ProdutoCard';
 import { View, FlatList } from 'react-native';
 import { Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
-import feedsEstaticos from '../../assets/dicionarios/feeds.json';
+import { getFeedsValidade } from '../../api';
 import { CentralizadoNaMesmaLinha } from '../../assets/styles';
-
-const FEEDS_POR_PAGINA = 4;
 
 export default class Feeds extends React.Component {
 
@@ -14,27 +12,15 @@ export default class Feeds extends React.Component {
         super(props);
 
         this.state = {
-            proximaPagina: 0,
+            proximaPagina: 1,
             feeds: [],
-
             atualizando: false,
             carregando: false
         };
     }
 
-    carregarFeeds = () => {
+    mostrarMaisFeeds = (maisFeeds) => {
         const { proximaPagina, feeds } = this.state;
-
-        // avisa que esta carregando
-        this.setState({
-            carregando: true
-        });
-
-        // carregar o total de feeds por pagina da pagina atual
-        const idInicial = proximaPagina * FEEDS_POR_PAGINA + 1;
-        const idFinal = idInicial + FEEDS_POR_PAGINA - 1;
-        const maisFeeds = feedsEstaticos.feeds.filter((feed) => feed._id >= idInicial && feed._id <= idFinal);
-
         if (maisFeeds.length) {
             //icrementar pagina e guarda os feeds
             this.setState({
@@ -51,6 +37,21 @@ export default class Feeds extends React.Component {
         }
     }
 
+    carregarFeeds = () => {
+        const { proximaPagina } = this.state;
+
+        // avisa que esta carregando
+        this.setState({
+            carregando: true
+        });
+
+        getFeedsValidade(proximaPagina).then((maisFeeds) => {
+            this.mostrarMaisFeeds(maisFeeds);
+        }).catch((erro) => {
+            console.error("Error acessando feeds geral: " + erro);
+        })
+    }
+
     componentDidMount = () => {
         this.carregarMaisFeeds();
     }
@@ -65,18 +66,18 @@ export default class Feeds extends React.Component {
     }
 
     atualizar = () => {
-        this.setState({ atualizando: true, feeds: [], proximaPagina: 0 }, () => {
+        this.setState({ atualizando: true, feeds: [], proximaPagina: 1, nomeProduto: null, empresaEscolhida: null }, () => {
             this.carregarFeeds();
         });
     }
 
     mostrarFeed = (feed) => {
         return (
-            <ProdutoCard feed={feed} navegador={this.props.navigation} />
+            <FeedCard feed={feed} navegador={this.props.navigation} />
         );
     }
 
-    mostrarProdutos = (feeds) => {
+    mostrarFeeds = (feeds) => {
         const { atualizando } = this.state;
 
         return (
@@ -125,7 +126,7 @@ export default class Feeds extends React.Component {
 
         if (feeds.length) {
             return (
-                this.mostrarProdutos(feeds)
+                this.mostrarFeeds(feeds)
             );
         } else {
             return (null);

@@ -3,17 +3,14 @@ import { ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { LoginOptionsMenu } from '../../components/Login';
 import { getEmpresa, getImagem  } from '../../api';
-import empresasEstaticas from '../../assets/dicionarios/empresas.json';
 import Icon from 'react-native-vector-icons/AntDesign';
-import feedsEstaticos from '../../assets/dicionarios/feeds.json';
 
 import {
     Avatar,
     NomeEmpresa,
     ContainerMenu,
     EsquerdaDaMesmaLinha,
-    DivisorMenu,
-    DataProduto
+    DivisorMenu
 } from '../../assets/styles';
 export default class Menu extends React.Component {
     constructor(props) {
@@ -67,7 +64,6 @@ export default class Menu extends React.Component {
 
     render = () => {
         const { empresas } = this.state;
-        const { navegador } = this.state;
         return (
             <SafeAreaInsetsContext.Consumer>
                 {insets =>

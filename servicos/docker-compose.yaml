@@ -25,6 +25,19 @@ services:
     networks:
       controllernet:
         ipv4_address: 172.29.1.2
+
+  validade:
+    image: controllernet
+    build: ./dockerfiles/servicos/
+    hostname: validade
+    expose:
+      - '5000'
+    volumes:
+      - './validade:/servico'
+    command: python3 servico.py
+    networks:
+      controllernet:
+        ipv4_address: 172.29.1.3
   bancodados:
     image: mysql
     hostname: bancodados

@@ -22,6 +22,7 @@ def get_conexao_db():
     )
 
     return conexao
+
 def gerar_feed(registro):
     feed = {
         "_id": registro["feed_id"],
@@ -55,7 +56,7 @@ def gerar_feed(registro):
     }
 
     return feed
-
+    
 @servico.route("/feeds/<int:pagina>")
 def get_feeds(pagina):
     feeds = []
@@ -70,7 +71,7 @@ def get_feeds(pagina):
         "from feeds, produtos, empresas " +
         "where produtos.id = feeds.produto " +
         "and empresas.id = produtos.empresa " +
-        "order by data desc " +
+        "order by produtos.data_prod ASC " +
         "limit " + str((pagina - 1) * TAMANHO_PAGINA) + ", " + str(TAMANHO_PAGINA))
 
     resultado = cursor.fetchall()
@@ -112,7 +113,7 @@ def get_feeds_por_empresa(empresa_id, pagina):
     cursor.execute(
         "select feeds.id as feed_id, DATE_FORMAT(feeds.data, '%Y-%m-%d %H:%i') as data, " +
         "empresas.id as empresa_id, empresas.nome as nome_empresa, empresas.avatar, " +
-        "produtos.nome as nome_produto, produtos.descricao, FORMAT(produtos.preco, 2) as preco, " +
+        "produtos.nome as nome_produto, produtos.descricao, FORMAT(produtos.preco, 2) as preco," +
         "produtos.url, produtos.imagem1, IFNULL(produtos.imagem2, '') as imagem2, IFNULL(produtos.imagem3, '') as imagem3 " +
         "from feeds, produtos, empresas " +
         "where produtos.id = feeds.produto " +
@@ -125,27 +126,6 @@ def get_feeds_por_empresa(empresa_id, pagina):
         feeds.append(gerar_feed(registro))
 
     return jsonify(feeds)
-
-@servico.route("/feed/<int:feed_id>")
-def get_feed(feed_id):
-    feed = {}
-
-    conexao = get_conexao_db()
-    cursor = conexao.cursor(dictionary=True)
-    cursor.execute(
-        "select feeds.id as feed_id, DATE_FORMAT(feeds.data, '%Y-%m-%d %H:%i') as data, " +
-        "empresas.id as empresa_id, empresas.nome as nome_empresa, empresas.avatar, " +
-        "produtos.nome as nome_produto, produtos.descricao, FORMAT(produtos.preco, 2) as preco, " +
-        "produtos.url, produtos.imagem1, IFNULL(produtos.imagem2, '') as imagem2, IFNULL(produtos.imagem3, '') as imagem3 " +
-        "from feeds, produtos, empresas " +
-        "where produtos.id = feeds.produto " +
-        "and empresas.id = produtos.empresa " +
-        "and feeds.id = " + str(feed_id))
-    registro = cursor.fetchone()
-    if registro:
-        feed = gerar_feed(registro)
-
-    return jsonify(feed)
 
 if __name__  == "__main__":
     servico.run(

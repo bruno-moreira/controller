@@ -4,7 +4,7 @@ import { Header } from 'react-native-elements';
 import { SliderBox } from 'react-native-image-slider-box';
 import CardView from 'react-native-cardview';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { Avatar, NomeProduto, DescricaoProduto, DataProduto, PrecoProduto, NomeEmpresa, CentralizadoNaMesmaLinha, Espacador } from '../../assets/styles';
+import { Avatar, NomeProduto, DescricaoProduto, DataProduto, PrecoProduto, NomeEmpresaMenu, CentralizadoNaMesmaLinha, Espacador } from '../../assets/styles';
 
 import { getFeed, getImagem } from '../../api';
 import Compartilhador from '../../components/Compartilhador';
@@ -75,7 +75,7 @@ export default class Detalhes extends React.Component {
                         centerComponent={
                             <CentralizadoNaMesmaLinha>
                                 <Avatar source={getImagem(feed.company.avatar)} />
-                                <NomeEmpresa>{feed.company.name}</NomeEmpresa>
+                                <NomeEmpresaMenu>{feed.company.name}</NomeEmpresaMenu>
                             </CentralizadoNaMesmaLinha>
                         }
                         rightComponent={
@@ -101,6 +101,9 @@ export default class Detalhes extends React.Component {
                                 <DataProduto>{feed.product.date}</DataProduto>
                             </CentralizadoNaMesmaLinha>
                             <Espacador />
+                            <CentralizadoNaMesmaLinha>
+                                <DescricaoProduto>{feed.product.url}</DescricaoProduto>
+                            </CentralizadoNaMesmaLinha>
                         </View>
                     </CardView>
                 </>
